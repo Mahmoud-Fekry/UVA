@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+
+#define sz(s) (int)s.size()
+#define all(s) s.begin(),s.end()
+
+typedef long long ll;
+
+using namespace std;
+
+typedef vector<int> vi;
+typedef map<int, int> mii;
+typedef pair<int, int> pii;
+char arr[101][101];
+
+bool valid(int x, int y) {
+	if (x && arr[x - 1][y] == 'x')
+		return false;
+	if (y && arr[x][y - 1] == 'x')
+		return false;
+	return true;
+}
+
+int main() {
+
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+#endif
+
+	int tc;
+	cin >> tc;
+	for (int p = 1; p <= tc; p++) {
+		cout << "Case " << p << ": ";
+		int n, ans = 0;
+		cin >> n;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+
+				cin >> arr[i][j];
+				if (arr[i][j] == 'x' && valid(i, j))
+					ans++;
+				if (arr[i][j] == '@' && !valid(i, j))
+					arr[i][j] = 'x';
+			}
+		}
+		cout << ans << endl;
+	}
+
+	return 0;
+}

@@ -1,0 +1,92 @@
+#include <bits/stdc++.h>
+
+#define sz(s) (long long)s.size()
+#define all(s) s.begin(),s.end()
+#define mem(a,b) memset(a,b,sizeof(a))
+
+typedef long long ll;
+typedef unsigned long long ull;
+
+using namespace std;
+
+void fl() {
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+#endif
+}
+
+typedef pair<int, int> pii;
+typedef set<string> ss;
+typedef set<int> si;
+typedef vector<int> vi;
+typedef vector<string> vs;
+typedef vector<pii> vpii;
+typedef map<int, int> mii;
+typedef map<string, int> msi;
+typedef map<int, ss> miss;
+typedef map<char, int> mci;
+
+ll _sieve_size;
+bitset<100000007> bs;
+vi primes;
+// compact STL for Sieve, better than vector<bool>!
+// ll is defined as: typedef long long ll;
+// 10^7 should be enough for most cases
+// compact list of primes in form of vector<int>
+void sieve(ll upperbound) {
+// create list of primes in [0..upperbound]
+	_sieve_size = upperbound + 1;
+// add 1 to include upperbound
+	bs.set();
+// set all bits to 1
+	bs[0] = bs[1] = 0;
+// except index 0 and 1
+	for (ll i = 2; i <= _sieve_size; i++)
+		if (bs[i]) {
+// cross out multiples of i starting from i * i!
+			for (ll j = i * i; j <= _sieve_size; j += i)
+				bs[j] = 0;
+			primes.push_back((int) i);
+// add this prime to the list of primes
+		}
+}
+// call this method in main method
+bool isPrime(ll N) {
+// a good enough deterministic prime tester
+	if (N <= _sieve_size)
+		return bs[N];
+// O(1) for small primes
+	for (int i = 0; i < (int) primes.size(); i++)
+		if (N % primes[i] == 0)
+			return false;
+	return true;
+// it takes longer time if N is a large prime!
+}
+
+int main() {
+	fl();
+	sieve(100000000);
+	int n;
+	while (cin >> n && n) {
+		if (!isPrime(n)) {
+			cout << "Given number is NOT prime! NO perfect number is available."
+					<< endl;
+			continue;
+		}
+
+		ull x = pow(2, n) - 1;
+		if (!isPrime(x)) {
+			cout
+					<< "Given number is prime. But, NO perfect number is available."
+					<< endl;
+			continue;
+		}
+		ull y = pow(2, n - 1);
+		x = x * y;
+		cout << "Perfect: " << x << "!" << endl;
+
+	}
+
+	return 0;
+}
+

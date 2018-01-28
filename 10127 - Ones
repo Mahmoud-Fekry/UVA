@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+
+#define sz(s) (int)s.size()
+#define all(s) s.begin(),s.end()
+#define mem(a,b) memset(a,b,sizeof(a))
+
+typedef long long ll;
+typedef unsigned long long ull;
+
+using namespace std;
+
+void fl() {
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+#endif
+}
+
+typedef pair<int, int> pii;
+typedef set<string> ss;
+typedef set<int> si;
+typedef vector<int> vi;
+typedef vector<string> vs;
+typedef vector<pii> vii;
+typedef map<int, int> mii;
+typedef map<string, int> msi;
+typedef map<int, ss> miss;
+typedef map<char, int> mci;
+
+int main() {
+	fl();
+	int n;
+	while (cin >> n) {
+		int res = 0, m = 0;
+		do {
+			m = (m * 10) + 1;
+			m %= n;
+			res++;
+		} while (m);
+		cout << res << endl;
+	}
+
+	return 0;
+}
+

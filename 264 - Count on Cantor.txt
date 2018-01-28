@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+
+#define sz(s) (int)s.size()
+#define all(s) s.begin(),s.end()
+#define mem(a,b) memset(a,b,sizeof(a))
+
+typedef long long ll;
+
+using namespace std;
+
+typedef pair<int, int> pii;
+typedef vector<int> vi;
+typedef vector<pii> vpii;
+typedef map<int, int> mii;
+
+int main() {
+
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+#endif
+
+	int n;
+	while (cin >> n) {
+		cout << "TERM " << n << " IS ";
+		int i, val = n;
+		for (i = 1; val > i; i++) {
+			val -= i;
+		}
+		val--;
+		if (i % 2) {
+			cout << i - val << "/" << 1 + val;
+		} else
+			cout << 1 + val << "/" << i - val;
+
+		cout << endl;
+	}
+
+	return 0;
+}

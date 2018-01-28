@@ -1,0 +1,73 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void fl() {
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+//	freopen("ot.txt", "w", stdout);
+#else
+//	freopen("jumping.in", "r", stdin);	// HERE
+#endif
+}
+
+#define sz(v) (int)((v).size())
+#define ssz(s) ((int)strlen(s))
+#define all(s) s.begin(),s.end()
+#define mem(a,b) memset(a,b,sizeof(a))
+
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+typedef vector<int> vi;
+typedef vector<pii> vpii;
+typedef map<int, int> mii;
+typedef map<string, int> msi;
+typedef map<int, string> mis;
+typedef map<int, vi> mivi;
+typedef map<int, pii> mipii;
+
+ll _sieve_size;
+bitset<100010042> bs;
+vi primes;
+void sieve(ll upperbound) {
+	_sieve_size = upperbound + 1;
+	bs.set();
+	bs[0] = bs[1] = 0;
+	for (ll i = 2; i <= _sieve_size; i++)
+		if (bs[i]) {
+			for (ll j = i * i; j <= _sieve_size; j += i)
+				bs[j] = 0;
+		}
+}
+bool isPrime(ll N) {
+	if (N <= _sieve_size)
+		return bs[N];
+	for (int i = 0; i < (int) primes.size(); i++)
+		if (N % primes[i] == 0)
+			return false;
+	return true;
+}
+
+int main() {
+	fl();
+	sieve(100010042);
+
+	int a, b;
+	while (cin >> a >> b) {
+		double ans, c = 0;
+
+		for (int i = a; i <= b; i++) {
+			ans = (i * i) + i + 41;
+			if (isPrime(ans))
+				c++;
+
+		}
+
+		ans = (c / (b - a + 1)) * 100;
+
+		 printf("%.2lf\n",ans+1e-10);
+	}
+
+	return 0;
+}
+

@@ -1,0 +1,67 @@
+#include <bits/stdc++.h>
+
+#define sz(s) (int)s.size()
+#define all(s) s.begin(),s.end()
+#define mem(a,b) memset(a,b,sizeof(a))
+
+typedef long long ll;
+typedef unsigned long long ull;
+
+using namespace std;
+
+void fl() {
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+#endif
+}
+
+typedef pair<int, int> pii;
+typedef set<string> ss;
+typedef set<int> si;
+typedef vector<int> vi;
+typedef vector<string> vs;
+typedef vector<pii> vii;
+typedef map<int, int> mii;
+typedef map<string, int> msi;
+typedef map<int, ss> miss;
+typedef map<char, int> mci;
+
+int mo(int a, int b, int c) {
+	long long x = 1, y = a; // long long is taken to avoid overflow of intermediate results
+	while (b > 0) {
+		if (b % 2 == 1) {
+			x = (x * y) % c;
+		}
+		y = (y * y) % c; // squaring the base
+		b /= 2;
+	}
+	return x % c;
+}
+
+int main() {
+	fl();
+	string s, s1;
+	int a = 2, b, c = 131071;
+	ll ans;
+	while (cin >> s) {
+		while (s[sz(s) - 1] != '#') {
+			cin >> s1;
+			s += s1;
+		}
+		ans = 0;
+		for (int i = sz(s) - 2, j = 0; i >= 0; i--, j++) {
+			if (s[i] == '1') {
+				ans += mo(a, j, c);
+			}
+		}
+		ans %= c;
+
+		if (!ans)
+			cout << "YES" << endl;
+		else
+			cout << "NO" << endl;
+	}
+
+	return 0;
+}
+

@@ -1,0 +1,110 @@
+#include <bits/stdc++.h>
+
+#define sz(s) (int)s.size()
+#define all(s) s.begin(),s.end()
+#define mem(a,b) memset(a,b,sizeof(a))
+
+typedef long long ll;
+typedef unsigned long long ull;
+
+using namespace std;
+
+void fl() {
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+#endif
+}
+
+typedef pair<int, int> pii;
+typedef set<string> ss;
+typedef set<int> si;
+typedef vector<int> vi;
+typedef vector<string> vs;
+typedef vector<pii> vpii;
+typedef map<int, int> mii;
+typedef map<string, int> msi;
+typedef map<int, ss> miss;
+typedef map<char, int> mci;
+
+ll _sieve_size;
+bitset<100000000> bs;
+vi primes;
+void sieve(ll upperbound) {
+	_sieve_size = upperbound + 1;
+	bs.set();
+	bs[0] = bs[1] = 0;
+	for (ll i = 2; i <= _sieve_size; i++)
+		if (bs[i]) {
+			for (ll j = i * i; j <= _sieve_size; j += i)
+				bs[j] = 0;
+			primes.push_back((int) i);
+		}
+}
+bool isPrime(ll N) {
+	if (N <= _sieve_size)
+		return bs[N];
+	for (int i = 0; i < (int) primes.size(); i++)
+		if (N % primes[i] == 0)
+			return false;
+	return true;
+}
+
+int main() {
+	fl();
+	sieve(1000000);
+	int n, m, dis = 0, a, b, c, d;
+	while (cin >> n >> m && (n || m)) {
+		if (n > m)
+			swap(n, m);
+		dis = 0;
+		vi v;
+		int low = lower_bound(all(primes), n) - primes.begin();
+		int hig = lower_bound(all(primes), m) - primes.begin();
+
+		if (primes[hig] > m)
+			hig--;
+
+		v.push_back(primes[low]);
+		v.push_back(primes[low + 1]);
+		dis = primes[low + 1] - primes[low];
+		for (int i = low + 2; i <= hig; i++) {
+			if (primes[i] - primes[i - 1] == dis)
+				v.push_back(primes[i]);
+			else {
+				if (sz(v) > 2) {
+					a = lower_bound(all(primes), v[0]) - primes.begin();
+					b = lower_bound(all(primes), v[sz(v) - 1]) - primes.begin();
+					c = primes[a] - primes[a - 1];
+					d = primes[b + 1] - primes[b];
+					if (c != dis && d != dis) {
+						for (int j = 0; j < sz(v) - 1; j++) {
+							cout << v[j] << " ";
+						}
+						cout << v[sz(v) - 1] << endl;
+					}
+				}
+				v.clear();
+				v.push_back(primes[i - 1]);
+				v.push_back(primes[i]);
+				dis = primes[i] - primes[i - 1];
+			}
+
+		}
+		if (sz(v) > 2) {
+			a = lower_bound(all(primes), v[0]) - primes.begin();
+			b = lower_bound(all(primes), v[sz(v) - 1]) - primes.begin();
+			c = primes[a] - primes[a - 1];
+			d = primes[b + 1] - primes[b];
+			if (c != dis && d != dis) {
+				for (int j = 0; j < sz(v) - 1; j++) {
+					cout << v[j] << " ";
+				}
+				cout << v[sz(v) - 1] << endl;
+			}
+		}
+
+	}
+
+	return 0;
+}
+
