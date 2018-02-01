@@ -1,0 +1,63 @@
+#include <bits/stdc++.h>
+
+#define sz(s) (int)s.size()
+#define all(s) s.begin(),s.end()
+#define mem(a,b) memset(a,b,sizeof(a))
+
+typedef long long ll;
+typedef unsigned long long ull;
+
+using namespace std;
+
+void fl() {
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+#endif
+	ios_base::sync_with_stdio(false), cin.tie(0), cout.tie(0);
+}
+
+typedef pair<int, int> pii;
+typedef set<string> SS;
+typedef set<int> si;
+typedef vector<int> vi;
+typedef vector<string> vs;
+typedef vector<pii> vii;
+typedef map<int, int> mii;
+typedef map<string, int> msi;
+typedef map<int, string> mis;
+typedef map<string, string> mss;
+typedef map<int, SS> miss;
+typedef map<char, int> mci;
+typedef map<int, vi> mivi;
+typedef map<int, vs> mivs;
+typedef map<string, vs> msvs;
+
+int main() {
+	fl();
+	int n, m, k, kk[11];
+	while (cin >> n >> m && (n + m)) {
+
+		n++;
+		set<int> ss;
+
+		cin >> k;
+
+		for (int i = 0; i <= k; i++)
+			cin >> kk[i];
+
+		for (int i = 0; i <= m; i++) {
+			ll ans = 0;
+			for (int j = k; j > 0; j--) {
+				ans += kk[j];
+				ans *= i;
+				ans %= n;
+
+			}
+			ans += kk[0];
+
+			ss.insert(ans % n);
+		}
+		cout << ss.size() << endl;
+	}
+	return 0;
+}
