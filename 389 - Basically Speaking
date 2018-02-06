@@ -1,0 +1,130 @@
+#include <bits/stdc++.h>
+
+#define sz(s) (int)s.size()
+#define all(s) s.begin(),s.end()
+#define mem(a,b) memset(a,b,sizeof(a))
+
+typedef long long ll;
+typedef unsigned long long ull;
+
+using namespace std;
+
+void fl() {
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+#endif
+	ios_base::sync_with_stdio(false), cin.tie(0), cout.tie(0);
+}
+
+typedef pair<int, int> pii;
+typedef set<string> SS;
+typedef set<int> si;
+typedef vector<int> vi;
+typedef vector<string> vs;
+typedef vector<pii> vii;
+typedef map<int, int> mii;
+typedef map<string, int> msi;
+typedef map<int, string> mis;
+typedef map<string, string> mss;
+typedef map<int, SS> miss;
+typedef map<char, int> mci;
+typedef map<int, vi> mivi;
+typedef map<int, vs> mivs;
+typedef map<string, vs> msvs;
+
+mci iin;
+map<int, char> iout;
+
+string longToString(ll a) {
+	stringstream ss;
+	ss << a;
+	string str = ss.str();
+	return str;
+}
+
+ll stringToLong(string s) {
+	stringstream g(s);
+
+	ll x = 0;
+	g >> x;
+	return x;
+}
+
+int main() {
+	fl();
+	iin['0'] = 0;
+	iin['1'] = 1;
+	iin['2'] = 2;
+	iin['3'] = 3;
+	iin['4'] = 4;
+	iin['5'] = 5;
+	iin['6'] = 6;
+	iin['7'] = 7;
+	iin['8'] = 8;
+	iin['9'] = 9;
+	iin['A'] = 10;
+	iin['B'] = 11;
+	iin['C'] = 12;
+	iin['D'] = 13;
+	iin['E'] = 14;
+	iin['F'] = 15;
+	iout[0] = '0';
+	iout[1] = '1';
+	iout[2] = '2';
+	iout[3] = '3';
+	iout[4] = '4';
+	iout[5] = '5';
+	iout[6] = '6';
+	iout[7] = '7';
+	iout[8] = '8';
+	iout[9] = '9';
+	iout[10] = 'A';
+	iout[11] = 'B';
+	iout[12] = 'C';
+	iout[13] = 'D';
+	iout[14] = 'E';
+	iout[15] = 'F';
+
+	string s = "", s2 = "";
+	int from, to;
+	ll b10 = 0, x;
+	while (cin >> s2 >> from >> to) {
+		s = "";
+		for (int i = 0; i < sz(s2); i++)
+			if (s2[i] != ' ')
+				s += s2[i];
+		b10 = 0;
+
+		if (from != 10) {
+			reverse(all(s));
+			for (int i = 0; i < sz(s); i++) {
+				b10 += iin[s[i]] * pow(from, i);
+
+			}
+		} else
+			b10 = stringToLong(s);
+		if (!b10) {
+			cout << "      " << 0 << endl;
+			continue;
+		}
+
+		if (to == 10) {
+			s = longToString(b10);
+		} else {
+			s = "";
+			while (b10) {
+				s += iout[b10 % to];
+				b10 /= to;
+			}
+			reverse(all(s));
+		}
+		if (sz(s) <= 7) {
+			for (int i = sz(s); i < 7; i++)
+				cout << " ";
+			cout << s << endl;
+		} else
+			cout << "  ERROR" << endl;
+	}
+
+	return 0;
+}
