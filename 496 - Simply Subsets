@@ -1,0 +1,120 @@
+#include <bits/stdc++.h>
+
+#define sz(s) (int)s.size()
+#define all(s) s.begin(),s.end()
+#define mem(a,b) memset(a,b,sizeof(a))
+#define isOn(S, j) (S & (1 << j))
+#define setBit(S, j) (S |= (1 << j))
+
+typedef long long ll;
+typedef unsigned long long ull;
+
+using namespace std;
+
+void fl() {
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+#endif
+	ios_base::sync_with_stdio(false), cin.tie(0), cout.tie(0);
+}
+
+typedef pair<int, int> pii;
+typedef set<string> SS;
+typedef set<int> si;
+typedef vector<int> vi;
+typedef vector<string> vs;
+typedef vector<pii> vii;
+typedef map<int, int> mii;
+typedef map<string, int> msi;
+typedef map<string, bool> msb;
+typedef map<int, string> mis;
+typedef map<string, string> mss;
+typedef map<int, SS> miss;
+typedef map<char, int> mci;
+typedef map<int, vi> mivi;
+typedef map<int, vs> mivs;
+typedef map<string, vs> msvs;
+
+void spi(string s1, msb mp) {
+	string s = "";
+	for (int i = 0; i < sz(s1); i++) {
+		if (s1[i] != ' ')
+			s + s1[i];
+		else {
+			mp[s] = 1;
+			s = "";
+		}
+	}
+}
+
+int main() {
+	fl();
+
+	string s1, s2;
+
+	while (getline(cin, s1) && getline(cin, s2)) {
+		bool ans1 = 1, ans2 = 1, ans3 = 1, ans4 = 1;
+		msb mp1, mp2;
+
+		string s = "";
+		for (int i = 0; i < sz(s1); i++) {
+			if (s1[i] != ' ')
+				s += s1[i];
+			else {
+				mp1[s] = 1;
+				s = "";
+			}
+		}
+		mp1[s] = 1;
+
+		s = "";
+		for (int i = 0; i < sz(s2); i++) {
+			if (s2[i] != ' ')
+				s += s2[i];
+			else {
+				mp2[s] = 1;
+				s = "";
+			}
+		}
+		mp2[s] = 1;
+
+		msb::iterator it1, it2;
+		it1 = mp1.begin();
+		it2 = mp2.begin();
+		while (it1 != mp1.end()) {
+			if (it1->second && !mp2[it1->first]) {
+				ans1 = 0;
+				ans2 = 0;
+			} else
+				ans4 = 0;
+			it1++;
+		}
+
+		while (it2 != mp2.end()) {
+			if (it2->second) {
+				if (!mp1[it2->first]) {
+					ans1 = 0;
+					ans3 = 0;
+				} else
+					ans4 = 0;
+			}
+			it2++;
+		}
+
+		if (ans1)
+			cout << "A equals B";
+		else if (ans2)
+			cout << "A is a proper subset of B";
+		else if (ans3)
+			cout << "B is a proper subset of A";
+		else if (ans4)
+			cout << "A and B are disjoint";
+		else
+			cout << "I'm confused!";
+		cout << endl;
+
+	}
+
+	return 0;
+}
+
