@@ -1,0 +1,142 @@
+#include <bits/stdc++.h>
+
+#define sz(s) (int)s.size()
+#define all(s) s.begin(),s.end()
+#define mem(a,b) memset(a,b,sizeof(a))
+#define isOn(S, j) (S & (1 << j))
+#define setBit(S, j) (S |= (1 << j))
+
+typedef long long ll;
+typedef unsigned long long ull;
+
+using namespace std;
+
+void fl() {
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+#endif
+	ios_base::sync_with_stdio(false), cin.tie(0), cout.tie(0);
+}
+
+typedef pair<int, int> pii;
+typedef set<string> SS;
+typedef set<int> si;
+typedef vector<int> vi;
+typedef vector<string> vs;
+typedef vector<pii> vii;
+typedef map<int, int> mii;
+typedef map<string, int> msi;
+typedef map<string, bool> msb;
+typedef map<int, string> mis;
+typedef map<string, string> mss;
+typedef map<int, SS> miss;
+typedef map<char, int> mci;
+typedef map<int, vi> mivi;
+typedef map<int, vs> mivs;
+typedef map<string, vs> msvs;
+
+int main() {
+	fl();
+	int n;
+	cin >> n;
+
+	while (n--) {
+		string s1, s2, k = "", v = "";
+		mss mp1, mp2;
+		vs add, del, ch;
+		cin >> s1 >> s2;
+
+		bool flag = 1;
+		for (int i = 1; i < sz(s1) - 1; i++) {
+
+			if (s1[i] == ':') {
+				flag = 0;
+			} else if (s1[i] == ',') {
+				mp1[k] = v;
+				mp2[k] = "----";
+				flag = 1;
+				k = "";
+				v = "";
+			} else {
+				if (flag)
+					k += s1[i];
+				else
+					v += s1[i];
+			}
+		}
+		if (sz(s1) > 2) {
+			mp1[k] = v;
+			mp2[k] = "----";
+		}
+
+		k = "", v = "";
+		flag = 1;
+
+		for (int i = 1; i < sz(s2) - 1; i++) {
+
+			if (s2[i] == ':') {
+				flag = 0;
+			} else if (s2[i] == ',') {
+				mp2[k] = v;
+				flag = 1;
+				k = "";
+				v = "";
+			} else {
+				if (flag)
+					k += s2[i];
+				else
+					v += s2[i];
+			}
+		}
+		if (sz(s2) > 2)
+			mp2[k] = v;
+
+		mss::iterator it1, it2;
+		it1 = mp1.begin();
+
+		while (it1 != mp1.end()) {
+			if (mp2[it1->first] == "----")
+				del.push_back(it1->first);
+			else if (mp2[it1->first] != it1->second)
+				ch.push_back(it1->first);
+			it1++;
+		}
+
+		it2 = mp2.begin();
+		while (it2 != mp2.end()) {
+			if (it2->second == "")
+				continue;
+			if (mp1[it2->first] == "")
+				add.push_back(it2->first);
+			it2++;
+		}
+
+		sort(all(add));
+		sort(all(del));
+		sort(all(ch));
+		if (!sz(add) && !sz(del) && !sz(ch))
+			cout << "No changes" << endl;
+		else {
+			if (sz(add)) {
+				cout << "+";
+				for (int i = 0; i < sz(add) - 1; i++)
+					cout << add[i] << ",";
+				cout << add[sz(add) - 1] << endl;
+			}
+			if (sz(del)) {
+				cout << "-";
+				for (int i = 0; i < sz(del) - 1; i++)
+					cout << del[i] << ",";
+				cout << del[sz(del) - 1] << endl;
+			}
+			if (sz(ch)) {
+				cout << "*";
+				for (int i = 0; i < sz(ch) - 1; i++)
+					cout << ch[i] << ",";
+				cout << ch[sz(ch) - 1] << endl;
+			}
+		}
+		cout << endl;
+	}
+	return 0;
+}
