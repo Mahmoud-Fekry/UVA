@@ -1,0 +1,90 @@
+#include <bits/stdc++.h>
+
+#define sz(s) (int)s.size()
+#define all(s) s.begin(),s.end()
+#define mem(a,b) memset(a,b,sizeof(a))
+#define isOn(S, j) (S & (1 << j))
+#define setBit(S, j) (S |= (1 << j))
+
+typedef long long ll;
+typedef unsigned long long ull;
+
+using namespace std;
+
+void fl() {
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+#endif
+	ios_base::sync_with_stdio(false), cin.tie(0), cout.tie(0);
+}
+
+typedef pair<int, int> pii;
+typedef set<string> SS;
+typedef set<int> si;
+typedef vector<int> vi;
+typedef vector<string> vs;
+typedef vector<pii> vii;
+typedef map<int, int> mii;
+typedef map<string, int> msi;
+typedef map<string, bool> msb;
+typedef map<int, string> mis;
+typedef map<string, string> mss;
+typedef map<int, SS> miss;
+typedef map<char, int> mci;
+typedef map<int, vi> mivi;
+typedef map<int, vs> mivs;
+typedef map<string, vs> msvs;
+
+vector<int> sstack;
+priority_queue<int> pq;
+queue<int> q;
+int main() {
+	fl();
+
+	int n;
+	while (cin >> n) {
+		bool isstack = true, isq = true, ispq = true;
+		sstack.clear();
+		queue<int> nq;
+		priority_queue<int> npq;
+		swap(q, nq);
+		swap(pq, npq);
+		for (int i = 0; i < n; ++i) {
+			int cmd, n;
+			cin >> cmd >> n;
+			if (cmd == 1) {
+				sstack.push_back(n);
+				pq.push(n);
+				q.push(n);
+			}
+			if (cmd == 2) {
+				if (isstack && !sstack.empty() && sstack.back() == n) {
+					sstack.pop_back();
+				} else {
+					isstack = false;
+				}
+				if (isq && !q.empty() && q.front() == n) {
+					q.pop();
+				} else {
+					isq = false;
+				}
+				if (ispq && !pq.empty() && pq.top() == n) {
+					pq.pop();
+				} else {
+					ispq = false;
+				}
+			}
+		}
+		if (isstack && !isq && !ispq)
+			cout << "stack" << endl;
+		else if (isq && !isstack && !ispq)
+			cout << "queue" << endl;
+		else if (ispq && !isstack && !isq)
+			cout << "priority queue" << endl;
+		else if (!ispq && !isstack && !isq)
+			cout << "impossible" << endl;
+		else
+			cout << "not sure" << endl;
+	}
+	return 0;
+}
