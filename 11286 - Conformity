@@ -1,0 +1,63 @@
+#include <bits/stdc++.h>
+
+#define sz(s) (int)s.size()
+#define all(s) s.begin(),s.end()
+#define mem(a,b) memset(a,b,sizeof(a))
+#define isOn(S, j) (S & (1 << j))
+#define setBit(S, j) (S |= (1 << j))
+
+typedef long long ll;
+typedef unsigned long long ull;
+
+using namespace std;
+
+void fl() {
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+#endif
+	ios_base::sync_with_stdio(false), cin.tie(0), cout.tie(0);
+}
+
+typedef pair<int, int> pii;
+typedef set<string> SS;
+typedef set<int> si;
+typedef vector<int> vi;
+typedef vector<string> vs;
+typedef vector<pii> vii;
+typedef map<int, int> mii;
+typedef map<string, int> msi;
+typedef map<string, bool> msb;
+typedef map<int, string> mis;
+typedef map<string, string> mss;
+typedef map<int, SS> miss;
+typedef map<char, int> mci;
+typedef map<int, vi> mivi;
+typedef map<int, vs> mivs;
+typedef map<string, vs> msvs;
+
+int main() {
+	fl();
+
+	int n;
+	while (cin >> n && n) {
+		vi v(5);
+		int mx = -1, ans = 0;
+		map<vi, int> mp;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < 5; j++)
+				cin >> v[j];
+			sort(all(v));
+			mp[v]++;
+			mx = max(mx, mp[v]);
+		}
+		map<vi, int>::iterator it = mp.begin();
+		while (it != mp.end()) {
+			if (it->second == mx)
+				ans += it->second;
+			it++;
+		}
+		cout << ans << endl;
+
+	}
+	return 0;
+}
